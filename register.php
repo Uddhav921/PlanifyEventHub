@@ -137,6 +137,7 @@ include_once 'includes/header.php';
                         <label for="user_type">Register As</label>
                         <select id="user_type" name="user_type">
                             <option value="user" <?php echo (isset($_POST['user_type']) && $_POST['user_type'] == 'user') ? 'selected' : ''; ?>>User</option>
+                             <option value="admin">Admin</option>
                           
                         </select>
                     </div>
