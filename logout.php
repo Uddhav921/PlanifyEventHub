@@ -1,0 +1,10 @@
+<?php
+include_once 'includes/functions.php';
+
+session_check();
+session_destroy();
+
+// Redirect to home page
+header("Location: index.php");
+exit();
+?>
