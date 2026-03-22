@@ -24,7 +24,7 @@ session_check();
                     <li><a href="aboutUs.php">About</a></li>
                     <li><a href="events.php">Events</a></li>
                     <li><a href="#contact" class="contact-link">Contact</a></li>
-                    <li><a href="chat.php">ChatUs</a></li>
+                    <li><a href="support.php">ChatUs</a></li>
                     
                     <?php if (is_logged_in()): ?>
                         <?php if (is_admin()): ?>
