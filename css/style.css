@@ -2610,10 +2610,216 @@ img {
     width: 100%;
 }
 
-/* Mobile Responsiveness */
-@media (max-width: 768px) {
-    .forgot-password {
-        text-align: center;
-        font-size: 13px;
-    }
+/* ============================================================
+   MOBILE RESPONSIVENESS — Hamburger Nav + Global Breakpoints
+   ============================================================ */
+
+/* --- Hamburger Button --- */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 200;
+    padding: 4px;
 }
+.hamburger span {
+    display: block;
+    width: 26px;
+    height: 3px;
+    background: var(--primary-color);
+    border-radius: 3px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+/* Animate hamburger → X when nav is open */
+body.nav-open .hamburger span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+body.nav-open .hamburger span:nth-child(2) { opacity: 0; }
+body.nav-open .hamburger span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+/* --- Mobile Nav Close Button (inside nav) --- */
+.nav-close {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 22px;
+    color: var(--text-color);
+    cursor: pointer;
+    align-self: flex-end;
+    margin-bottom: 10px;
+    padding: 6px 8px;
+}
+
+/* --- Nav Backdrop (dark overlay behind open nav) --- */
+.nav-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 149;
+}
+body.nav-open .nav-backdrop { display: block; }
+
+/* ============================================================
+   ≤ 768px  —  Small tablets & phones
+   ============================================================ */
+@media (max-width: 768px) {
+
+    /* -- Header -- */
+    header .container {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 16px;
+        flex-wrap: nowrap;
+    }
+
+    .logo h1 { font-size: 18px; }
+
+    /* Show hamburger */
+    .hamburger { display: flex; }
+
+    /* Mobile slide-in drawer */
+    .main-nav {
+        position: fixed;
+        top: 0;
+        right: -280px;
+        width: 280px;
+        height: 100vh;
+        background: white;
+        box-shadow: -4px 0 20px rgba(0,0,0,0.15);
+        z-index: 150;
+        display: flex;
+        flex-direction: column;
+        padding: 20px 20px 30px;
+        overflow-y: auto;
+        transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    body.nav-open .main-nav { right: 0; }
+
+    /* Show close button */
+    .nav-close { display: block; }
+
+    /* Stack nav links vertically */
+    nav ul {
+        flex-direction: column;
+        gap: 4px;
+    }
+    nav ul li { margin-left: 0; }
+    nav ul li a {
+        display: block;
+        padding: 12px 14px;
+        font-size: 16px;
+        border-radius: 6px;
+    }
+
+    /* Theme toggle inside nav */
+    .theme-toggle {
+        width: 100%;
+        text-align: left;
+        padding: 12px 14px;
+        background: none;
+        border: none;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .welcome-user {
+        margin-top: 16px;
+        padding-top: 16px;
+        border-top: 1px solid var(--border-color);
+        font-size: 14px;
+        color: #666;
+    }
+
+    /* -- Hero Slider -- */
+    .hero-slider { height: 60vh; min-height: 280px; }
+    .slide-content h2 { font-size: 1.6rem; }
+    .slide-content p  { font-size: 0.95rem; }
+
+    /* -- Event Detail Header -- */
+    .event-detail-header { padding: 40px 0; }
+    .event-detail-info h1 { font-size: 24px; }
+    .event-detail-content .container { grid-template-columns: 1fr; }
+    .event-detail-info-box ul li { flex-direction: column; gap: 4px; }
+
+    /* -- Ticket Quantity Selector -- */
+    .ticket-quantity-selector { padding: 16px; }
+    .quantity-controls { gap: 8px; }
+    .qty-btn { width: 36px; height: 36px; font-size: 14px; }
+
+    /* -- Event Actions -- */
+    .event-actions { flex-direction: column; }
+    .btn-large { width: 100%; text-align: center; padding: 14px; font-size: 16px; }
+
+    /* -- Events List (horizontal cards → stacked) -- */
+    .event-card.horizontal { grid-template-columns: 1fr; }
+    .event-image { height: 200px; }
+    .events-grid { grid-template-columns: 1fr; }
+
+    /* -- Category Filter — wrap nicely -- */
+    .category-filter { flex-direction: row; flex-wrap: wrap; gap: 8px; }
+    .category-filter li a { padding: 6px 14px; font-size: 13px; }
+
+    /* -- Contact Section -- */
+    .contact-container { grid-template-columns: 1fr; }
+    .content-box { grid-template-columns: 1fr; }
+
+    /* -- Form Container -- */
+    .form-container { margin: 0 12px; padding: 20px; }
+
+    /* -- Filter grid -- */
+    .filter-grid { grid-template-columns: 1fr; }
+    .filter-buttons { flex-direction: column; }
+
+    /* -- Footer -- */
+    .footer-content { grid-template-columns: 1fr; }
+    footer { padding: 40px 0 0; }
+
+    /* -- Prevent horizontal scroll -- */
+    body { overflow-x: hidden; }
+
+    /* -- Tables scroll horizontally on mobile -- */
+    .table-responsive, .admin-table-wrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* -- About page -- */
+    .about-hero h1 { font-size: 2rem; }
+    .about-hero { padding: 2.5rem 1rem; }
+
+    /* -- Page header -- */
+    .page-header h1 { font-size: 1.8rem; }
+    .page-header { padding: 2rem 0; }
+
+    /* -- Support / Chat layout -- */
+    .chat-container { grid-template-columns: 1fr; padding: 12px; }
+    .chat-messages { height: 350px; }
+
+    /* -- Forgot password link -- */
+    .forgot-password { text-align: center; font-size: 13px; }
+
+    /* -- Action buttons -- */
+    .action-buttons .btn { margin: 5px 0; display: block; width: 100%; }
+}
+
+/* ============================================================
+   ≤ 480px  —  Phones (portrait)
+   ============================================================ */
+@media (max-width: 480px) {
+    .logo h1 { font-size: 15px; }
+    .slide-content h2 { font-size: 1.3rem; }
+    .slide-content p  { font-size: 0.88rem; }
+    .event-detail-info h1 { font-size: 20px; }
+    .btn-large { font-size: 15px; padding: 12px; }
+    .form-container { padding: 16px; }
+    .section-title { font-size: 1.4rem; }
+    .category-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .price-range .price-inputs { flex-direction: column; }
+}

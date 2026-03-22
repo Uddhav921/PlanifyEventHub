@@ -18,14 +18,24 @@ session_check();
             <div class="logo">
                 <h1><a href="index.php">Planify the Event Hub</a></h1>
             </div>
-            <nav class="main-nav">
+
+            <!-- Hamburger Button -->
+            <button class="hamburger" id="hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+
+            <nav class="main-nav" id="main-nav">
+                <!-- Close button inside nav for mobile -->
+                <button class="nav-close" id="nav-close" aria-label="Close menu">
+                    <i class="fas fa-times"></i>
+                </button>
                 <ul>
                     <li><a href="index.php">Home</a></li>
                     <li><a href="aboutUs.php">About</a></li>
                     <li><a href="events.php">Events</a></li>
                     <li><a href="#contact" class="contact-link">Contact</a></li>
                     <li><a href="support.php">ChatUs</a></li>
-                    
+
                     <?php if (is_logged_in()): ?>
                         <?php if (is_admin()): ?>
                             <li><a href="admin/dashboard.php">Admin Dashboard</a></li>
@@ -51,51 +61,71 @@ session_check();
                     </div>
                 <?php endif; ?>
             </nav>
+            <!-- Mobile nav backdrop -->
+            <div class="nav-backdrop" id="nav-backdrop"></div>
         </div>
     </header>
 
     <script>
-        // Contact Link Handler
         document.addEventListener('DOMContentLoaded', function() {
+
+            // --- Hamburger Menu ---
+            const hamburger   = document.getElementById('hamburger');
+            const navClose    = document.getElementById('nav-close');
+            const mainNav     = document.getElementById('main-nav');
+            const backdrop    = document.getElementById('nav-backdrop');
+
+            function openNav()  { document.body.classList.add('nav-open'); }
+            function closeNav() { document.body.classList.remove('nav-open'); }
+
+            if (hamburger) hamburger.addEventListener('click', openNav);
+            if (navClose)  navClose.addEventListener('click',  closeNav);
+            if (backdrop)  backdrop.addEventListener('click',  closeNav);
+
+            // Close nav when any link inside it is clicked (mobile UX)
+            if (mainNav) {
+                mainNav.querySelectorAll('a').forEach(function(link) {
+                    link.addEventListener('click', closeNav);
+                });
+            }
+
+            // --- Contact Link Handler ---
             const contactLink = document.querySelector('.contact-link');
-            
-            contactLink.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                if (!window.location.pathname.endsWith('index.php')) {
-                    window.location.href = 'index.php#contact';
-                    return;
-                }
-                
-                const contactSection = document.getElementById('contact');
-                if (contactSection) {
-                    contactSection.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
+            if (contactLink) {
+                contactLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    closeNav();
+                    if (!window.location.pathname.endsWith('index.php') && window.location.pathname !== '/') {
+                        window.location.href = 'index.php#contact';
+                        return;
+                    }
+                    const contactSection = document.getElementById('contact');
+                    if (contactSection) contactSection.scrollIntoView({ behavior: 'smooth' });
+                });
+            }
 
-        // Theme Toggle Handler
-        document.addEventListener('DOMContentLoaded', function() {
+            // --- Theme Toggle Handler ---
             const themeToggle = document.getElementById('theme-toggle');
-            const moonIcon = themeToggle.querySelector('.fa-moon');
-            const sunIcon = themeToggle.querySelector('.fa-sun');
+            if (themeToggle) {
+                const moonIcon = themeToggle.querySelector('.fa-moon');
+                const sunIcon  = themeToggle.querySelector('.fa-sun');
 
-            const savedTheme = localStorage.getItem('theme') || 'light';
-            document.documentElement.setAttribute('data-theme', savedTheme);
-            updateThemeToggle(savedTheme);
+                const savedTheme = localStorage.getItem('theme') || 'light';
+                document.documentElement.setAttribute('data-theme', savedTheme);
+                updateThemeToggle(savedTheme);
 
-            themeToggle.addEventListener('click', function() {
-                const currentTheme = document.documentElement.getAttribute('data-theme');
-                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                themeToggle.addEventListener('click', function() {
+                    const currentTheme = document.documentElement.getAttribute('data-theme');
+                    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                    document.documentElement.setAttribute('data-theme', newTheme);
+                    localStorage.setItem('theme', newTheme);
+                    updateThemeToggle(newTheme);
+                });
 
-                document.documentElement.setAttribute('data-theme', newTheme);
-                localStorage.setItem('theme', newTheme);
-                updateThemeToggle(newTheme);
-            });
-
-            function updateThemeToggle(theme) {
-                moonIcon.style.display = theme === 'dark' ? 'none' : 'inline-block';
-                sunIcon.style.display = theme === 'dark' ? 'inline-block' : 'none';
+                function updateThemeToggle(theme) {
+                    moonIcon.style.display = theme === 'dark' ? 'none' : 'inline-block';
+                    sunIcon.style.display  = theme === 'dark' ? 'inline-block' : 'none';
+                }
             }
         });
     </script>
