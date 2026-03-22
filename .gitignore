@@ -1,0 +1,6 @@
+/vendor/
+/uploads/
+/logs/
+/qr_codes/
+*.env
+tesr_mail.php
