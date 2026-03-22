@@ -76,8 +76,6 @@ $qa_data = [
         'answer' => "Become organizer steps:\n- Register account\n- Submit verification documents\n- Complete organizer profile\n- Accept terms & conditions\n- Start creating events"
     ]
 ];
-// Keep your existing $qa_data array here
-// ...existing qa_data array...
 
 // Handle chat message
 $chat_response = '';
@@ -116,10 +114,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['message'])) {
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
-
-// Update the style section in the head
-
-    // ...existing styles...
 
     .chat-messages {
         height: 500px;

@@ -229,7 +229,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
 var options = {
-    "key": "<?php echo getenv('RAZORPAY_KEY_ID'); ?>",
+    "key": "<?php echo $_ENV['RAZORPAY_KEY_ID'] ?? ''; ?>",
     "amount": "<?php echo $event['price'] * 100; ?>",
     "currency": "INR",
     "name": "Planify: The Event Hub",
