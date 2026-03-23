@@ -38,21 +38,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $insert_stmt->bind_param("iss", $user['id'], $token_hash, $expiry);
                 
                 if ($insert_stmt->execute()) {
-                    // Send reset email
-                    $mail = new Mail();
-                    $reset_link = "http://" . $_SERVER['HTTP_HOST'] . "/Fresh/reset_password.php?token=" . $token;
-                    
-                    $emailSent = $mail->sendPasswordResetEmail(
-                        $user['username'],
-                        $email,
-                        $reset_link
-                    );
-                    
-                    if ($emailSent) {
-                        $success = "Password reset instructions have been sent to your email";
-                    } else {
-                        $error = "Failed to send reset email. Please try again later.";
-                    }
+                        // Send reset email (only if PHPMailer is available)
+                        $emailSent = false;
+                        if (class_exists('Mail')) {
+                            $mail = new Mail();
+                            $reset_link = "http://" . $_SERVER['HTTP_HOST'] . "/Fresh/reset_password.php?token=" . $token;
+                            $emailSent = $mail->sendPasswordResetEmail(
+                                $user['username'],
+                                $email,
+                                $reset_link
+                            );
+                        }
+                        
+                        if ($emailSent) {
+                            $success = "Password reset instructions have been sent to your email";
+                        } else {
+                            $error = "Failed to send reset email. Please try again later.";
+                        }
                 } else {
                     $error = "Something went wrong. Please try again later.";
                 }

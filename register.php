@@ -65,9 +65,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $stmt->bind_param('ssss', $username, $email, $hashed_password, $user_type);
                 
                 if ($stmt->execute()) {
-                    // Send registration email
-                    $mail = new Mail();
-                    $emailSent = $mail->sendRegistrationEmail($username, $email);
+                    // Send registration email (only if PHPMailer is available)
+                    $emailSent = false;
+                    if (class_exists('Mail')) {
+                        $mail = new Mail();
+                        $emailSent = $mail->sendRegistrationEmail($username, $email);
+                    }
                     
                     if ($emailSent) {
                         $success = "Registration successful! Please check your email for confirmation.";

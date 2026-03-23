@@ -12,10 +12,11 @@ if (file_exists($envFile)) {
     }
 }
 
-$servername = $_ENV['DB_HOST'] ?? 'localhost';
-$username   = $_ENV['DB_USER'] ?? 'root';
-$password   = $_ENV['DB_PASS'] ?? '';
-$dbname     = $_ENV['DB_NAME'] ?? 'Planify';
+// Production fallback credentials (used when .env is not present on server)
+$servername = $_ENV['DB_HOST'] ?? 'sql206.infinityfree.com';
+$username   = $_ENV['DB_USER'] ?? 'if0_41448241';
+$password   = $_ENV['DB_PASS'] ?? 'Sharda9834';
+$dbname     = $_ENV['DB_NAME'] ?? 'if0_41448241_planify_db';
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);

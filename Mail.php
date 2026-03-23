@@ -3,7 +3,13 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
 
-require_once __DIR__ . '/vendor/autoload.php';  
+$autoload = __DIR__ . '/vendor/autoload.php';
+if (!file_exists($autoload)) {
+    // PHPMailer not installed — mail functions will be unavailable
+    // Pages will still load; email sending will silently return false
+    return;
+}
+require_once $autoload;
 
 class Mail {
     private $mailer;
