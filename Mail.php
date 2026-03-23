@@ -1,8 +1,9 @@
 <?php
 
-$_phpmailer_autoload = __DIR__ . '/vendor/autoload.php';
+$_phpmailer_autoload      = __DIR__ . '/vendor/autoload.php';
+$_phpmailer_autoload_real = __DIR__ . '/vendor/composer/autoload_real.php';
 
-if (file_exists($_phpmailer_autoload)) {
+if (file_exists($_phpmailer_autoload) && file_exists($_phpmailer_autoload_real)) {
     require_once $_phpmailer_autoload;
 
     class Mail {
