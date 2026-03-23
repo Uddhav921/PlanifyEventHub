@@ -1,7 +1,7 @@
 <?php
 include_once 'includes/db_connect.php';
 include_once 'includes/functions.php';
-require_once 'Mail.php';
+include_once 'Mail.php';
 
 session_check();
 
